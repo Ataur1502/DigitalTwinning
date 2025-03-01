@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed Experiments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #3d0000;
+            display: flex;
+            margin: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #800000;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 12px;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #a52a2a;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+            text-align: center;
+        }
+
+        h2 {
+            color: #800000;
+        }
+
+        /* Table Styling */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            border: 1px solid #800000;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #800000;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f5e1e1;
+        }
+
+        tr:hover {
+            background-color: #ffd6d6;
+        }
+
+        /* Button Styling */
+        .simulate-btn {
+            background-color: #800000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .simulate-btn:hover {
+            background-color: #a52a2a;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            .main-content {
+                margin-left: 210px;
+                width: calc(100% - 210px);
+            }
+            table {
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 10px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Virtual Labs</h2>
+        <ul>
+            <li><a href="/dashboard/">Dashboard</a></li>
+            <li><a href="/experiments/">Assigned Experiments</a></li>
+            <li><a href="/completed/">Completed</a></li>
+            <li><a href="/pending/">Pending</a></li>
+            <li><a href="/ytb/">Yet to Begin</a></li>
+            <li><a href="/profile/">Profile</a></li>
+            <li><a href="/logout/">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>Pending Experiments</h2>
+
+        <table>
+            <tr>
+                <th>Roll No</th>
+                <th>Experiment Name</th>
+              
+                <th>Action</th> <!-- New Column for Simulate Button -->
+            </tr>
+            {% for experiment in experiments %}
+            <tr>
+                <td>{{ experiment.roll_no }}</td>
+                <td>{{ experiment.experiment_name }}</td>
+            
+                <td><button class="simulate-btn" onclick="simulateExperiment('{{ experiment.experiment_name }}')">Resume The Experiment</button></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No completed experiments found.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script>
+        function simulateExperiment(experimentName) {
+            alert("Simulating: " + experimentName);
+            // Redirect or open experiment simulation page (modify as needed)
+            // window.location.href = "/simulate?experiment=" + encodeURIComponent(experimentName);
+        }
+    </script>
+
+</body>
+</html>

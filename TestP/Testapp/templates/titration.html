@@ -1,0 +1,331 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titration Virtual Lab</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;  
+        }
+        .lab-container {
+            position: relative;
+            width: 800px;
+            height: 600px; 
+            background: url('{% static "images/background.svg" %}') no-repeat center center; 
+            background-size: cover;
+        }
+        .equipmentstand {
+            position: absolute;
+            left: 120px;
+            bottom: 1px;
+            width: 70%;
+        }
+        .flask {
+            position: absolute;
+            bottom: 120px;
+            left: 346px;
+            width: 80px;
+        }
+        .solution {
+            position: absolute;
+            bottom: 120px;
+            left: 346px;
+            width: 80px;
+            opacity: 0.8;
+            clip-path: inset(85% 0 0 0);
+        }
+        .burette-container {
+            position: absolute;
+            top: 165px;
+            left: 368px;
+            width: 40px;
+            height: 240px;
+            overflow: hidden;
+        }
+        .burette {
+            position: absolute;
+            bottom: 38px;
+            width: 30px;
+            height: 240px;
+            object-fit: cover; 
+            left: 3px;
+            clip-path: inset(0 0 0 0);
+        }
+        .stirrer {
+            position: absolute;
+            bottom: 120px;
+            left: 375px;
+            width: 20px; 
+        }
+        .turner {
+            position: absolute;
+            bottom: 205px;
+            left: 340px;
+            width: 50px;
+        }
+        .drop {
+            position: absolute;
+            left: 380px;
+            width: 12px;
+            opacity: 1;
+            transition: top 1.5s ease-in, opacity 1s ease-in;
+        } 
+        .button-container {
+            margin-left: 140px; 
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white; 
+            border: none;
+            border-radius: 5px;
+        
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .table-container {
+            top:15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        .ai-response-container {
+    text-align: center;
+    margin-top: 10px;
+    max-width: 300px; /* Adjust width as needed */
+    padding: 5px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: inline-block;
+    word-wrap: break-word; /* Ensures text wraps */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds "..." for overflowed text */
+    white-space: nowrap; /* Keeps text in a single line */
+}
+
+.ai-response:hover {
+    white-space: normal; /* Allows full text display on hover */
+    overflow: visible;
+}
+
+
+    </style>
+</head>
+<body>
+     
+    <div class="lab-container">
+        <h5 style="top:200px; color:#fff">Copyright © Amrita University 2009 - 2015</h5>
+        <img src="{% static 'images/stand_and_tube.svg' %}" class="equipmentstand" alt="Stand and Tube"> 
+        <img src="{% static 'images/conical_flask.svg' %}" class="equipment flask" alt="Conical Flask"> 
+        <img id="flask" src="{% static 'images/methyl_orange_yellow_solution.svg' %}" class="solution" alt="Flask Solution">
+        
+        <div class="burette-container">
+            <img id="burette" src="{% static 'images/burette_solution.svg' %}" class="burette" alt="Burette Solution">
+        </div>
+
+        <img id="stirrer" class="stirrer" src="{% static 'images/stirrer1.svg' %}" alt="Turner">
+        <img id="turner" class="turner" src="{% static 'images/turner1.svg' %}" alt="Turner">
+    </div>
+
+    <div class="button-container" >
+        <button onclick="rotateTurner()" id="rotateButton">Rotate Turner</button>
+        
+        <br>
+    </div>
+    <br>
+    <div style="margin-top: 20px; text-align: center; " class="table-container">
+        <img src="{% static 'images/image.png'%}">
+        <table border="1" cellpadding="10" cellspacing="0" style="margin: auto; border-collapse: collapse;">
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>V₁ (mL)</td>
+                <td id ="v1">0</td> <!-- Static value -->
+            </tr>
+            <tr>
+                <td>Remaining Liquid</td>
+                <td id ="rv">0</td> <!-- Static value -->
+            </tr>
+            <tr>
+                <td>V₂ (mL)</td>
+                <td>0</td> <!-- Static value -->
+            </tr>
+            <tr>
+                <td>M₁ (Molarity)</td>
+                <td>0</td> <!-- Static value -->
+            </tr>
+            <tr>
+                <td>M₂ (Molarity)</td>
+                <td id="m2">0</td> <!-- Static value -->
+            </tr>
+        </table>
+        <br>
+        <button onclick="startListening()">Take assitant</button>
+        <button onclick="calculateM2()">Calculate M₂</button>
+        <p id="output">Press the button to start capturing...</p>
+    <form id="voiceForm" method="POST" action="/process_voice/">
+        {% csrf_token %}
+        <input type="hidden" name="voice_text" id="voice_text">
+    </form>
+    <div class="ai-response-container">
+        {% if ai_response %}
+            <p class="ai-response">AI Response: {{ ai_response }}</p>
+        {% endif %}
+    </div>
+    
+   
+
+
+    <script>
+       
+        let turnerIndex = 0;
+        const turnerElement = document.getElementById("turner");
+        const buretteElement = document.getElementById("burette");
+        const flaskElement = document.getElementById("flask");
+        let rv1=50;
+        const turnerImages = [
+            "{% static 'images/turner1.svg' %}",
+            "{% static 'images/turner2.svg' %}",
+            "{% static 'images/turner3.svg' %}",
+            "{% static 'images/turner4.svg' %}"
+        ];
+        const stirrerImages = [
+            "{% static 'images/stirrer1.svg' %}",
+            "{% static 'images/stirrer2.svg' %}",
+            "{% static 'images/stirrer3.svg' %}",
+            "{% static 'images/stirrer4.svg' %}",
+            "{% static 'images/stirrer5.svg' %}",
+            "{% static 'images/stirrer6.svg' %}"
+        ];
+        const flaskImages = [
+            "{% static 'images/methyl_orange_yellow_solution.svg' %}",
+            "{% static 'images/methyl_orange_yellow_solution.svg' %}",
+            "{% static 'images/phenolphthalein_solution.svg' %}",  
+            "{% static 'images/phenolphthalein_solution.svg' %}" 
+        ];
+        let v1Value=0;
+        let liquidLevel = 0;
+        const totalLiquid = 10;
+        const dropVolume = 0.01;
+        const stepSize = (100 / totalLiquid) * dropVolume;
+        let dropsSinceLastColorChange = 0;
+        let flaskStage = 0;
+        let currentFrame = 0;
+        const stirrerElement = document.getElementById("stirrer");
+
+        function animateStirrer() {
+            stirrerElement.src = stirrerImages[currentFrame];
+            currentFrame = (currentFrame + 1) % stirrerImages.length;
+        }
+        function rotateTurner() {
+            turnerIndex = (turnerIndex + 1) % turnerImages.length;
+            turnerElement.src = turnerImages[turnerIndex];
+
+            if (turnerIndex === 0) {
+                dropLiquid();
+            }
+        }
+
+        function dropLiquid() {
+            if (liquidLevel < 100) {
+                let newDrop = document.createElement("img");
+                newDrop.src = "{% static 'images/solution_drop.svg' %}";
+                newDrop.classList.add("drop");
+                newDrop.style.position = "absolute";
+                newDrop.style.width = "12px";
+                newDrop.style.left = "380px"; 
+                newDrop.style.top = "400px";
+                document.querySelector(".lab-container").appendChild(newDrop);
+
+                setTimeout(() => {
+                    newDrop.style.top = "460px";
+                }, 50);
+
+                setTimeout(() => {
+                    newDrop.style.opacity = "0";
+                    setTimeout(() => newDrop.remove(), 300);
+                }, 1200);
+
+                liquidLevel += stepSize;
+                buretteElement.style.clipPath = `inset(${liquidLevel}% 0 0 0)`;
+
+                let flaskLiquidLevel = 85 - liquidLevel;
+                flaskElement.style.clipPath = `inset(${flaskLiquidLevel}% 0 0 0)`;
+
+                dropsSinceLastColorChange++;
+                if (dropsSinceLastColorChange >= 7) {
+                    dropsSinceLastColorChange = 0;        
+                    if (flaskStage < flaskImages.length - 1) {
+                        flaskStage++;
+                        flaskElement.src = flaskImages[flaskStage];
+                    }
+                }
+                v1Value++;
+                document.getElementById("v1").innerText = v1Value;
+                rv1--;
+                document.getElementById("rv").innerText = rv1;
+
+            }
+        }
+        function calculateM2() {
+            let v1 = parseFloat(v1Value);
+            let v2 = parseFloat(20);
+            let m1 = parseFloat(0.1);
+            if (v1 > 0) {
+                let m2 = (m1 * v1) / v2;
+                document.getElementById("m2").innerText = m2.toFixed(3);
+            }
+        }
+        let recognition;
+
+        function startListening() {
+            if (!recognition) {
+                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-US';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.onresult = function(event) {
+                    const text = event.results[0][0].transcript;
+                    document.getElementById('output').innerText = text;
+                    document.getElementById('voice_text').value = text;
+                    document.getElementById('voiceForm').submit();
+                };
+
+                recognition.onerror = function(event) {
+                    console.error("Speech recognition error:", event.error);
+                    alert("Error capturing speech. Please try again.");
+                };
+            }
+            console.log("Listening...");
+            recognition.start();
+        }
+        
+        setInterval(animateStirrer, 100); 
+        document.getElementById("rotateButton").addEventListener("click", rotateTurner);
+        
+    </script>
+</body>
+</html>

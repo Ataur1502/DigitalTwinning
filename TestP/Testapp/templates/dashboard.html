@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Lab Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            display: flex;
+            background: #f8f4f4;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: #800000;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            transition: 0.3s;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            padding: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        .sidebar ul li:hover,
+        .sidebar ul li.active {
+            background: #a52a2a;
+        }
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 20px;
+            transition: 0.3s;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            .main-content {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+            }
+        }
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 100px;
+                padding: 10px;
+            }
+            .sidebar h2 {
+                font-size: 16px;
+            }
+            .sidebar ul li {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .main-content {
+                margin-left: 100px;
+                width: calc(100% - 100px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Virtual Labs</h2>
+        <ul>
+            <li class="active"><a href="#">Dashboard</a></li>
+            <li><a href="/experiments/">Assigned Experiments</a></li>
+            <li><a href="/completed/">Completed</a></li>
+            <li><a href="/pending/">Pending</a></li>
+            <li><a href="#">Yet to Begin</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Student & Class Analytics</h1>
+        </header>
+        <div class="dashboard">
+            <div class="card">
+                <h2>Individual Student Analytics</h2>
+                <canvas id="studentChart"></canvas>
+            </div>
+            <div class="card">
+                <h2>Class Analytics</h2>
+                <canvas id="classChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Overall Class Progress</h2>
+            <canvas id="overallChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const chartData = [
+            { id: "studentChart", type: "doughnut", data: [3, 1, 1] },
+            { id: "classChart", type: "bar", data: [25, 10, 5] },
+            { id: "overallChart", type: "pie", data: [62.5, 25, 12.5] }
+        ];
+
+        function createChart(chartId, chartType, chartData) {
+            new Chart(document.getElementById(chartId).getContext("2d"), {
+                type: chartType,
+                data: {
+                    labels: ["Completed", "Pending", "Yet to Begin"],
+                    datasets: [{
+                        data: chartData,
+                        backgroundColor: ["#800000", "#a52a2a", "#5a1a1a"]
+                    }]
+                },
+                options: chartType === "bar" ? { scales: { y: { beginAtZero: true } } } : {}
+            });
+        }
+
+        chartData.forEach(chart => createChart(chart.id, chart.type, chart.data));
+    </script>
+</body>
+</html>

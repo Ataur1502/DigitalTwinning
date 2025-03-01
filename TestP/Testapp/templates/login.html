@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olabs | Login</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="#" class="active">Olabs</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="login-form">
+                <h2>Student Login</h2>
+                <form id="authForm" method="POST" action="/login/">
+                    {% csrf_token %}
+                    <div class="messages">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="message {{ message.tags }}">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-type-toggle">
+                        <button type="button" class="toggle-btn active" data-form="login">Sign In</button>
+                    </div>
+
+                    <div class="input-box name-input" >
+                        <input type="text" required id="username" name="username" placeholder="RollNo">
+                    </div>
+
+
+                    <div class="input-box password-box">
+                        <input type="password" required id="password" name="password" placeholder="Password">
+                        <span class="toggle-password" id="togglePassword" title="Show/Hide Password">👁</span>
+                    </div>
+
+
+                    <button type="submit" class="login-btn" id="submitBtn">Login</button>
+
+                </form>
+            </div>
+
+            <div class="info-section">
+                <h2>Olabs</h2>
+                <span>Student Management System</span>
+                <p>Welcome to Olabs. Please log in with your credentials to access the student management features.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

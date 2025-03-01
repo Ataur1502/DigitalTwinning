@@ -1,0 +1,142 @@
+[
+    {
+        "question": "What is titration?",
+        "answer": "Titration is a laboratory technique used to determine the concentration of an unknown solution by reacting it with a solution of known concentration."
+    },
+    {
+        "question": "What are the main types of titration?",
+        "answer": "The main types of titration are acid-base titration, redox titration, complexometric titration, and precipitation titration."
+    },
+    {
+        "question": "What is the equivalence point in titration?",
+        "answer": "The equivalence point is the stage in titration where the amount of titrant added is exactly enough to completely react with the analyte."
+    },
+    {
+        "question": "What is the end point in titration?",
+        "answer": "The end point is the point where an indicator changes color, signaling that the reaction is complete."
+    },
+    {
+        "question": "What is an acid-base titration?",
+        "answer": "Acid-base titration is a method used to determine the concentration of an acidic or basic solution by reacting it with a base or acid of known concentration."
+    },
+    {
+        "question": "What is the role of an indicator in titration?",
+        "answer": "An indicator helps determine the end point of titration by changing color when the reaction is complete."
+    },
+    {
+        "question": "What is a primary standard in titration?",
+        "answer": "A primary standard is a highly pure, stable substance used to prepare standard solutions in titration."
+    },
+    {
+        "question": "Give an example of a primary standard.",
+        "answer": "Sodium carbonate (Na₂CO₃) is an example of a primary standard used in acid-base titration."
+    },
+    {
+        "question": "What is a standard solution?",
+        "answer": "A standard solution is a solution of known concentration used in titration to determine the concentration of an unknown solution."
+    },
+    {
+        "question": "What is back titration?",
+        "answer": "Back titration is a method used when a direct titration is difficult; an excess of titrant is added, and the unreacted portion is titrated with another reagent."
+    },
+    {
+        "question": "What is a burette used for in titration?",
+        "answer": "A burette is used to precisely measure and deliver the titrant during titration."
+    },
+    {
+        "question": "What is a pipette used for in titration?",
+        "answer": "A pipette is used to measure and transfer a fixed volume of the solution to be analyzed."
+    },
+    {
+        "question": "What is a titrant?",
+        "answer": "A titrant is the solution of known concentration added to the unknown solution during titration."
+    },
+    {
+        "question": "What is an analyte?",
+        "answer": "An analyte is the substance whose concentration is being determined in a titration."
+    },
+    {
+        "question": "What is the molarity formula used in titration?",
+        "answer": "The molarity formula is M₁V₁ = M₂V₂, where M is molarity and V is volume of acid or base."
+    },
+    {
+        "question": "Why is phenolphthalein used in titration?",
+        "answer": "Phenolphthalein is used as an indicator because it changes color in acid-base titration at a pH of around 8.2-10."
+    },
+    {
+        "question": "What color does phenolphthalein turn in a basic solution?",
+        "answer": "Phenolphthalein turns pink in a basic solution."
+    },
+    {
+        "question": "What color does methyl orange turn in acidic and basic solutions?",
+        "answer": "Methyl orange turns red in acidic solutions and yellow in basic solutions."
+    },
+    {
+        "question": "What is redox titration?",
+        "answer": "Redox titration is a type of titration based on oxidation-reduction reactions between the analyte and titrant."
+    },
+    {
+        "question": "What is an example of redox titration?",
+        "answer": "An example is the titration of potassium permanganate (KMnO₄) with iron (II) sulfate (FeSO₄)."
+    },
+    {
+        "question": "What is a complexometric titration?",
+        "answer": "Complexometric titration is used to determine metal ions in solution using a complex-forming reagent like EDTA."
+    },
+    {
+        "question": "What is the indicator used in complexometric titration?",
+        "answer": "Eriochrome Black T is commonly used as an indicator in complexometric titration."
+    },
+    {
+        "question": "What is precipitation titration?",
+        "answer": "Precipitation titration is a type of titration where a precipitate forms during the reaction between the titrant and the analyte."
+    },
+    {
+        "question": "What is an example of precipitation titration?",
+        "answer": "An example is the Mohr method, which uses silver nitrate (AgNO₃) to determine chloride ions (Cl⁻)."
+    },
+    {
+        "question": "Why is distilled water used in titration?",
+        "answer": "Distilled water is used to avoid introducing impurities that may affect the reaction."
+    },
+    {
+        "question": "What is the role of a buffer solution in titration?",
+        "answer": "A buffer solution helps maintain a constant pH during titration, preventing drastic pH changes."
+    },
+    {
+        "question": "Why is a white tile used in titration?",
+        "answer": "A white tile is used to make color changes more visible during titration."
+    },
+    {
+        "question": "What is the function of a conical flask in titration?",
+        "answer": "A conical flask is used to hold the analyte and prevent spills while swirling the solution."
+    },
+    {
+        "question": "How does temperature affect titration?",
+        "answer": "Temperature can affect reaction rates and the accuracy of endpoint detection in titration."
+    },
+    {
+        "question": "What happens if you add too much titrant?",
+        "answer": "Adding too much titrant surpasses the equivalence point, leading to inaccurate results."
+    },
+    {
+        "question": "What is the purpose of standardizing a solution?",
+        "answer": "Standardization ensures that a titrant has an accurately known concentration before use in titration."
+    },
+    {
+        "question": "What is a neutralization reaction?",
+        "answer": "A neutralization reaction occurs when an acid and a base react to form water and a salt."
+    },
+    {
+        "question": "What is a weak acid-strong base titration?",
+        "answer": "It is a titration where a weak acid reacts with a strong base, resulting in a pH higher than 7 at equivalence."
+    },
+    {
+        "question": "What is a strong acid-weak base titration?",
+        "answer": "It is a titration where a strong acid reacts with a weak base, resulting in a pH lower than 7 at equivalence."
+    },
+    {
+        "question": "What is a strong acid-strong base titration?",
+        "answer": "A titration where a strong acid reacts with a strong base, resulting in a pH of 7 at the equivalence point."
+    }
+]
